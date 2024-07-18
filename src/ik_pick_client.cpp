@@ -28,42 +28,42 @@ public:
 
     void open_gripper(moveit::planning_interface::MoveGroupInterface& move_gripper)
     {
-        move_gripper.setJointValueTarget("fringer1_joint", 0.0);
+        move_gripper.setJointValueTarget("fiinger1_joint", 0.0);
         move_gripper.move();
     }
 
 
 
-    void pre_pick(moveit::planning_interface::MoveGroupInterface& move_group)
-    {
+    // void pre_pick(moveit::planning_interface::MoveGroupInterface& move_group)
+    // {
         
-        orientation.setRPY(tau/4, - tau/4, 0);
-        pre_pick_position.orientation = tf2::toMsg(orientation);
+    //     orientation.setRPY(tau/4, - tau/4, 0);
+    //     pre_pick_position.orientation = tf2::toMsg(orientation);
       
-        service.request.get_position = true;
+    //     service.request.get_position = true;
 
-        if (client_picking_pose.call(service))
-        {
-            pre_pick_position.position.x = service.response.x_position
-            pre_pick_position.position.y = service.response.y_position + 0.15;
-            pre_pick_position.position.z = service.response.z_position;
+    //     if (client_picking_pose.call(service))
+    //     {
+    //         pre_pick_position.position.x = service.response.x_position;
+    //         pre_pick_position.position.y = service.response.y_position + 0.15;
+    //         pre_pick_position.position.z = service.response.z_position;
             
-        }
-        else
-        {
-            ROS_WARN("Service failed :( ");
-        }
+    //     }
+    //     else
+    //     {
+    //         ROS_WARN("Service failed :( ");
+    //     }
 
-        move_group.setPoseTarget(pre_pick_position, "picking_point");
-        move_group.move();
+    //     move_group.setPoseTarget(pre_pick_position, "picking_point");
+    //     move_group.move();
 
-    }
+    // }
    
     void pick(moveit::planning_interface::MoveGroupInterface& move_group)
     {
         
 
-        orientation.setRPY(tau/4, - tau/4, 0);
+        orientation.setRPY(-tau/4, 0, -tau);
         pick_position.orientation = tf2::toMsg(orientation);
         
         service.request.get_position = true;
@@ -88,10 +88,10 @@ public:
     void place(moveit::planning_interface::MoveGroupInterface& move_group_place)
     {
         
-        orientation.setRPY(0, tau/4, 0);
+        orientation.setRPY(-tau/4, 0, -tau);
         place_position.orientation = tf2::toMsg(orientation);
         place_position.position.x = 0.5;
-        place_position.position.y = 0.5;
+        place_position.position.y = -0.5;
         place_position.position.z = 0.5;
         move_group_place.setPoseTarget(place_position, "picking_point");
 
@@ -162,8 +162,8 @@ int main (int argc, char **argv)
 
     Pick_And_Place Pick_place;
 
-    Pick_place.pre_pick(group);
-    ros::WallDuration(1.0).sleep();
+    //Pick_place.pre_pick(group);
+    //ros::WallDuration(1.0).sleep();
     Pick_place.pick(group);
     ros::WallDuration(1.0).sleep();
     Pick_place.close_gripper(gripper);

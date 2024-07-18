@@ -82,11 +82,11 @@ int main(int argc, char **argv)
     // Target position
     geometry_msgs::Pose target_pose1;
     tf2::Quaternion orientation;
-    orientation.setRPY(0, 0, 0);
+    orientation.setRPY(-tau/4, 0, -tau);
     target_pose1.orientation = tf2::toMsg(orientation);
-    target_pose1.position.x = 0.5;
-    target_pose1.position.y = -0.5;
-    target_pose1.position.z = 0.5;
+    target_pose1.position.x = 0.0;
+    target_pose1.position.y = -0.8;
+    target_pose1.position.z = 0.0245;
     group.setPoseTarget(target_pose1, "picking_point");
 
     // visualize the planning

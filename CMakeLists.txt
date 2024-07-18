@@ -162,6 +162,10 @@ add_executable(ik_test src/ik_test.cpp)
 add_dependencies(ik_test ${cobot_test_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ik_test ${catkin_LIBRARIES})
 
+add_executable(ik_pick_client src/ik_pick_client.cpp)
+add_dependencies(ik_pick_client ${cobot_test_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(ik_pick_client ${catkin_LIBRARIES})
+
 
 #############
 ## Install ##
